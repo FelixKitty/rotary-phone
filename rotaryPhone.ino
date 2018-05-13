@@ -1,21 +1,14 @@
-
 #include "Adafruit_FONA.h"
 
 #define FONA_RX 3
 #define FONA_TX 4
 #define FONA_RST 5
 
-// set the interrupt for fona RI pin
-//#define FONA_RI_INTERRUPT 0
-//const byte interruptPin = 2;
-
-
 // this is a large buffer for replies
 char replybuffer[255];
 
 // this is the phone number
 char phoneNumber[30];
-
 
 // We default to using software serial. If you want to use hardware serial
 // (because softserial isnt supported) comment out the following three lines
@@ -29,16 +22,16 @@ Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
 
 uint8_t type;
 
-
 // set pin numbers
 const int hookPin = 7;
 const int rotaryIsDialingPin = 8;
 const int rotaryPulsePin = 9;
 const int ringPin = 12;
-// constants
 
+// constants
 const int debounceDelay = 5;
 
+// vars
 int needToPrint = 0;
 int count;
 int startedDialing = 0;
@@ -53,6 +46,9 @@ int stoppedPlayingDialTone = 1;
 int hookState = 1;
 volatile int isRinging = 0;
 
+/**
+ * Setup function.
+ */
 void setup() {
 
   Serial.begin(115200);
@@ -82,6 +78,7 @@ void setup() {
     Serial.print("Module IMEI: "); Serial.println(imei);
   }
 
+  // Setup Pin Modes
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(2, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(2), ring, FALLING);
@@ -93,14 +90,16 @@ void setup() {
   pinMode(rotaryPulsePin, INPUT);
   digitalWrite(rotaryPulsePin, HIGH);
   pinMode(ringPin, OUTPUT);
+
+  // Wait for 1 second.
   delay(1000);
 
-// set to ext speaker
+  // set to ext speaker
   fona.sendCheckReply(F("AT+CSDVC=3,1"), F("OK"), 500);
-// set echo canceller  
+  // set echo canceller  
   fona.sendCheckReply(F("AT+CECM=7"), F("OK"), 500);
 
-// set volume
+  // set volume
   fona.sendCheckReply(F("AT+CLVL=1"), F("OK"), 500);
   fona.sendCheckReply(F("AT+CFGRI=0,1"), F("OK"), 500);
   
@@ -110,14 +109,20 @@ void setup() {
   //reset ri pin
   fona.sendCheckReply(F("AT+CRIRS"), F("OK"), 500);
 
-// set silent mode? to stop ring thru speaker
+  // set silent mode to stop ring thru speaker
   fona.sendCheckReply(F("AT+CALM=1"), F("OK"), 500);
 
-// set sidetone attenuation
+  // set sidetone attenuation
   fona.sendCheckReply(F("AT+SIDET=1000"), F("OK"), 500);
 
-    isRinging = 0;
+  // initialize isRinging
+  isRinging = 0;
 }
+
+/**
+ * The main function.
+ * 
+*/
 
 void loop() {
 
@@ -131,6 +136,7 @@ void loop() {
     Serial.println(isRinging);
     ringBell();
   }
+
   if (isRinging == 1 && hookState == LOW) {
     callInProgress = 1;
     isRinging = 0;
@@ -167,12 +173,12 @@ void loop() {
   }
 
   if ((hookState == 0) && (callInProgress == 1)) {
-    // Serial.println("Call in progress");
+    Serial.println("Call in progress");
   }
 
   if (hookState == 0 && callInProgress == 0) {
 
-    //  handset is off the hook
+    // handset is off the hook
     // play dial tone
     if (!startedDialing) {
       if (!startedPlayingDialTone) {
