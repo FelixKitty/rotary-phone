@@ -17,10 +17,10 @@ char phoneNumber[30];
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 SoftwareSerial *fonaSerial = &fonaSS;
 
-// Use this one for FONA 3G
+// Use this one for FONA 3G (uncomment to use the 3G library)
 //Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
 
-// Use this one for FONA LTE
+// Use this one for FONA LTE (uncomment to use the 4G/LTE library)
 Adafruit_FONA_LTE fona = Adafruit_FONA_LTE(FONA_RST);
 
 uint8_t type;
