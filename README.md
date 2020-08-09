@@ -7,4 +7,4 @@ Listens to the position of the handset and when it's lifted, plays dialtone and 
 Uses Adafruit's FONA board for the phone stuff and it now works with all the SIM chips in that FONA library. Triggers a tiny solenoid to bounce back and forwards at the proper frequency to ring the bells of an old-style phone and make it sound realistic. 
 
 
-![Old phone](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ericsson_Dialog_in_green.JPG/220px-Ericsson_Dialog_in_green.JPG)
+![Old telecom phones in 6 colours](https://i.redd.it/ter0jwjq6bez.jpg)
