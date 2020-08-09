@@ -1,8 +1,8 @@
 #include "Adafruit_FONA.h"
 
-#define FONA_RX 3
-#define FONA_TX 4
-#define FONA_RST 5
+#define FONA_RX 26      //reciver pin for LilyGO-T
+#define FONA_TX 27      //transmitter pin for LilyGO-T
+#define FONA_RST 5      //reset pin for LilyGO-T
 
 // this is a large buffer for replies
 char replybuffer[255];
