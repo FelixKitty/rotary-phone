@@ -17,6 +17,9 @@ char phoneNumber[30];
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 SoftwareSerial *fonaSerial = &fonaSS;
 
+// Use this one for FONA 3G
+//Adafruit_FONA_3G fona = Adafruit_FONA_3G(FONA_RST);
+
 // Use this one for FONA LTE
 Adafruit_FONA_LTE fona = Adafruit_FONA_LTE(FONA_RST);
 
@@ -64,8 +67,30 @@ void setup() {
   Serial.print(F("Found "));
 
   switch (type) {
-    case FONA3G_A:
-      Serial.println(F("FONA 3G (American)")); break;
+    case SIM800L:
+      Serial.println(F("SIM800L")); break;
+    case SIM800H:
+      Serial.println(F("SIM800H")); break;
+    case SIM808_V1:
+      Serial.println(F("SIM808 (v1)")); break;
+    case SIM808_V2:
+      Serial.println(F("SIM808 (v2)")); break;
+    case SIM5320A:
+      Serial.println(F("SIM5320A (American)")); break;
+    case SIM5320E:
+      Serial.println(F("SIM5320E (European)")); break;
+    case SIM7000A:
+      Serial.println(F("SIM7000A (American)")); break;
+    case SIM7000C:
+      Serial.println(F("SIM7000C (Chinese)")); break;
+    case SIM7000E:
+      Serial.println(F("SIM7000E (European)")); break;
+    case SIM7000G:
+      Serial.println(F("SIM7000G (Global)")); break;
+    case SIM7500A:
+      Serial.println(F("SIM7500A (American)")); break;
+    case SIM7500E:
+      Serial.println(F("SIM7500E (European)")); break;
     default:
       Serial.println(F("???")); break;
   }
